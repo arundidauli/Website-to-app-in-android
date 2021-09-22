@@ -3,16 +3,15 @@ package com.netkosh.orakart;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.florent37.viewanimator.ViewAnimator;
-import com.wang.avi.AVLoadingIndicatorView;
+
 
 public class MainActivity extends AppCompatActivity {
-    private AVLoadingIndicatorView avi;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,27 +28,28 @@ public class MainActivity extends AppCompatActivity {
                 .duration(2000)
                 .start();
 
-
-        avi = findViewById(R.id.avi);
-        startAnim();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        findViewById(R.id.txtAdminLogin).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                startActivity(new Intent(getApplicationContext(), WebViewActivity.class));
-                finish();
-                stopAnim();
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                intent.putExtra("type","admin");
+                startActivity(intent);
+                overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit);
+
             }
-        }, 4000);
+        });
+        findViewById(R.id.txtOther).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                intent.putExtra("type","other");
+                startActivity(intent);
+                overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit);
+            }
+        });
+
+
     }
 
-    void startAnim() {
-        avi.show();
-        // or avi.smoothToShow();
-    }
 
-    void stopAnim() {
-        avi.hide();
-        // or avi.smoothToHide();
-    }
 }

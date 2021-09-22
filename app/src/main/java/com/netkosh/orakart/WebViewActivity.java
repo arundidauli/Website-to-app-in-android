@@ -21,41 +21,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class WebViewActivity extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
     private ProgressDialog progressDialog;
-    private Context mContext = this;
+    private final Context mContext = this;
     private WebView wb;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_shop:
-                    WebViewer("https://greengalaxy.in/");
-                    return true;
-                case R.id.navigation_gifts:
-                    WebViewer("https://greengalaxy.in/wishlist/");
-                    return true;
-                case R.id.navigation_cart:
-                    WebViewer("https://greengalaxy.in/cart/");
-                    return true;
-                case R.id.navigation_profile:
-                    WebViewer("https://greengalaxy.in/my-account");
-                    return true;
-            }
-
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        progressDialog = new ProgressDialog(mContext, R.style.Custom);
-        wb = findViewById(R.id.webview);
-        WebViewer("https://greengalaxy.in/");
+        wb = findViewById(R.id.web_view);
+        if (getIntent().getStringExtra("type").equals("admin")){
+            WebViewer("https://gurukulpublicschool.thewingshield.com/site/login");
+        }else {
+            WebViewer("https://gurukulpublicschool.thewingshield.com/site/userlogin");
+        }
+
 
     }
 
@@ -89,13 +68,15 @@ public class WebViewActivity extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled")
     public void WebViewer(String url) {
 
-        // progressDialog.setTitle(R.string.loading);
-        progressDialog.show();
+
         wb.getSettings().setLoadsImagesAutomatically(true);
         wb.getSettings().setJavaScriptEnabled(true);
         wb.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         wb.setWebViewClient(new WebViewClient());
         wb.getSettings().setSupportZoom(true);
+        wb.getSettings().setDomStorageEnabled(true);
+        wb.getSettings().setUseWideViewPort(true);
+
         wb.getSettings().setBuiltInZoomControls(true);
         wb.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -110,13 +91,11 @@ public class WebViewActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                progressDialog.dismiss();
 
             }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                progressDialog.show();
                 super.onPageStarted(view, url, favicon);
             }
         });
