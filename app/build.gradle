@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.netkosh.greengalaxy"
+        applicationId "com.global.public.school"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -28,15 +28,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.android.support:design:30.0.0'
-
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.github.smarteist:autoimageslider:1.3.2'
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    implementation 'com.wang.avi:library:2.1.3'
-    implementation 'com.github.d-max:spots-dialog:0.4@aar'
-    implementation 'com.android.volley:volley:1.1.1'
     implementation'com.github.florent37:viewanimator:1.1.0'
+    //dexter permissions
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation "com.karumi:dexter:6.2.2"
 
 }
